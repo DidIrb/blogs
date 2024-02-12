@@ -65,7 +65,3 @@ Contributions are welcome! If you'd like to improve this project, follow these s
 ## License
 
 This project is open source and available under the **MIT License**. Feel free to use, modify, and distribute it.
-
----
-
-Remember to replace the placeholders with actual details specific to your project. Happy coding! 🚀
