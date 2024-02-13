@@ -1,31 +1,60 @@
-import express from 'express';
+import express, { urlencoded } from 'express';
+import bcrypt from 'bcryptjs'; 
 import cors from "cors"
-import connectDB from "./src/config/dbConn.js"
 import corsOptions from "./src/config/corsOptions.js"
+import connect_to_db, { db, models } from './src/models/index.js';
+import { env } from './src/config/db.config.js';
+import userRoute from "./src/routes/user.routes.js";
+import cookieParser from "cookie-parser";
 
-const PORT = process.env.PORT || 3500;
+const PORT = env.PORT || 3500;
+const base = env.BASE
 const app = express();
+
+app.use(cookieParser());
+// parse requests of content-type - application/json
+app.use(express.json());
+app.use(urlencoded({ extended: true }));
 
 app.use(express.json()); 
 app.use(cors(corsOptions)); 
 
-app.get('/', (req, res) => {
-    const itemList = [
-        { id: 1, name: 'Item 1', category: 'Category A' }, 
-        { id: 2, name: 'Item 2', category: 'Category B' },
-        { id: 3, name: 'Item 3', category: 'Category A' },
-        { id: 4, name: 'Item 4', category: 'Category A' },
-        { id: 5, name: 'Item 5', category: 'Category D' },
-        { id: 6, name: 'Item 6', category: 'Category C' },
-        { id: 7, name: 'Item 7', category: 'Category A' },
-        { id: 8, name: 'Item 8', category: 'Category B' },
-    ];
-
-    res.json(itemList);
+// Testing route
+app.get("/", (req, res) => {
+    res.json({ message: "Welcome to Centralized Blogs Management." });
 });
 
-connectDB();
+// All routes
+app.use(`/${base}/users`, userRoute);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+connect_to_db();
+
+// Sync
+db.conn
+  .sync({ alter: true })
+  .then(async () => {
+    console.log("Synced db.");
+    const User = models.user;
+    const username = 'default_admin';
+    const email = 'default@example.com';
+    const password = 'ComplicatedPassword'; // replace with your actual default password
+
+    const user = await User.findOne({ where: { username } });
+
+    if (!user) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      try {
+        const newUser = await User.create({ username, email, password: hashedPassword });
+        console.log("Default user created:", newUser);
+      } catch (err: any) {
+        console.log("Failed to create default user:", err.message);
+      }
+    }
+  })
+  .catch((err) => { 
+    console.log("Failed to sync db: " + err.message);
+  });

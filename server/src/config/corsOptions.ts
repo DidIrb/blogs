@@ -1,6 +1,7 @@
 import { CorsOptions } from "cors";
+import { env } from "./db.config.js";
 
-const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
+const allowedOrigins = env.ALLOWED_ORIGINS.split(',');
 
 const corsOptions: CorsOptions = {
   origin: (origin, callback) => {
@@ -8,7 +9,7 @@ const corsOptions: CorsOptions = {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS Testing to see if it works"));
-    }
+    } 
   },
   credentials: true,
   optionsSuccessStatus: 200,

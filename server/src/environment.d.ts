@@ -8,6 +8,7 @@ declare namespace NodeJS {
         NODE_ENV:string;
         PORT:number;
         DB_HOST:string;
+        BASE:string;
         // Add other environment variables here if needed
     }
 }
