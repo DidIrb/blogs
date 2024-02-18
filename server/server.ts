@@ -6,6 +6,9 @@ import connect_to_db, { db, models } from './src/models/index.js';
 import { env } from './src/config/db.config.js';
 import userRoute from "./src/routes/user.routes.js";
 import cookieParser from "cookie-parser";
+import validateToken from './src/middleware/validationToken.js';
+import authRouter from "./src/routes/auth.routes.js";
+import tokenRouter from "./src/routes/token.js";
 
 const PORT = env.PORT || 3500;
 const base = env.BASE
@@ -26,6 +29,12 @@ app.get("/", (req, res) => {
 
 // All routes
 app.use(`/${base}/users`, userRoute);
+
+
+// Use authentication routes
+app.use(`/${base}/auth`, authRouter);
+app.use(`/${base}/token`, tokenRouter); // generate new access token
+app.use(validateToken);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

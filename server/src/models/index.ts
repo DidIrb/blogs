@@ -14,7 +14,6 @@ export const models = {
   user: Users(),
 };
 
-
 const connect_to_db = async () => {
   try {
     await sequelize.authenticate();

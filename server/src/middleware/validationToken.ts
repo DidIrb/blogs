@@ -6,7 +6,6 @@ const validateToken = (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.access_token; 
   // let token = req.header('Authorization');
   console.log("CHECKING TOKEN VALIDITY", token);
-  // Check if the token exists
   if (!token) {
     console.log("no access token provided"); 
     return res.status(401).json({ message: 'Access denied, No token provided' });
@@ -21,7 +20,6 @@ const validateToken = (req: Request, res: Response, next: NextFunction) => {
     
     next();
   } catch (err) {
-    // If the token is invalid, return an error
     console.log("token is invalid")
     return res.status(401).json({ message: 'Invalid token' });
   }
