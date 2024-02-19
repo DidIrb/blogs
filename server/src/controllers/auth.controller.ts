@@ -35,22 +35,23 @@ export const signup = async (req: Request, res: Response) => {
     return res.status(201).json({ message: 'User created successfully', data });
   } catch (err:any) {
     if (err.name === 'SequelizeValidationError') {
-      res.status(400).json({ error: err.message });
+      res.status(400).json({ message: err.message });
     } else {
-      res.status(401).json({ error: err.message });
+      res.status(401).json({ message: err.message });
     }
   }
   
 };
 
 export const signin = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
-    return res.status(400).json({ message: 'Username and password are required' });
+  console.log(req.body);
+  const { email, password} = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required' });
   }
 
-  const user: any = await User.findOne({ where: { username } });
-  if (!user) { return res.status(404).json({ message: 'User not found' }) }
+  const user: any = await User.findOne({ where: { email } });
+  if (!user) { return res.status(404).json({ message: 'Wrong Email Provided' }) }
 
   const match = await bcrypt.compare(password, user.password);
   if (!match) {

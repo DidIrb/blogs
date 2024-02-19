@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter, useNavigate } from "react-router-dom";
 import { Blogs } from "./pages/admin/blogs.tsx";
-import { Register } from "./pages/auth/register.tsx";
-import { Login } from "./pages/auth/login.tsx";
+import { SignUp } from "./pages/auth/signup.tsx";
+import { Signin } from "./pages/auth/signin.tsx";
 import { AdminLayout, AuthLayout } from "./components/layouts.tsx";
 import { Home } from "./pages/home.tsx";
 import { Admin } from "./pages/admin/admin.tsx";
@@ -34,12 +34,12 @@ function App() {
       element: <AuthLayout />,
       children: [
         {
-          path: "sign-up",
-          element: <Register />,
+          path: "signup",
+          element: <SignUp />,
         },
         {
-          path: "sign-in",
-          element: <Login />,
+          path: "signin",
+          element: <Signin />,
         },
       ],
     },

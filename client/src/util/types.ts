@@ -8,6 +8,7 @@ export interface user {
 export interface AuthContextValue {
   currentUser: user | null;
   isAuthenticated: boolean;
-  login: (inputs: user) => void;
+  signin: (inputs: user) => void;
+  signup: (inputs: user) => void;
   logout: () => void;
 } 
