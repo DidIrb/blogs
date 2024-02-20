@@ -10,5 +10,5 @@ export interface AuthContextValue {
   isAuthenticated: boolean;
   signin: (inputs: user) => void;
   signup: (inputs: user) => void;
-  logout: () => void;
+  signout: () => void;
 } 

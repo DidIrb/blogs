@@ -9,28 +9,20 @@ export const SignUp = () => {
   const navigate = useNavigate();
   const [err, setError] = useState(null);
   const [sMessage, setsMessage] = useState(null);
-  
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    watch,
-  } = useForm<user>();
+
+  const { register, handleSubmit, formState: { errors }, watch } = useForm<user>();
 
   const onSubmit = async (data: user) => {
     console.log("this is the data", data);
     try {
       const res: any = await signup(data);
+      console.log(res);
       setsMessage(res.message);
-      setTimeout(() => {
-        navigate("/signin");
-      }, 2000);
+      setTimeout(() => { navigate("/signin") }, 2000);
     } catch (err: any) {
       console.log("Something went wrong", err);
       setError(err.response.data.message);
     }
-    reset();
   };
 
   return (
@@ -76,7 +68,7 @@ export const SignUp = () => {
           />
         </div>
         <div className="mb-3">
-          <label  className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Already Have an Account? 
+          <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Already Have an Account?
             <Link to="/signin" className="text-blue-600 hover:underline dark:text-blue-500"> Sign In </Link></label>
         </div>
         <button type="submit" onClick={handleSubmit(onSubmit)} className="primary-btn">Create Account</button>

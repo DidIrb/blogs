@@ -98,7 +98,8 @@ export const logout = async (req: Request, res: Response) => {
     if (result === 0) {
       return res.status(404).json({ message: 'Refresh token not found' });
     }
-  
+    res.clearCookie('refresh_token', { httpOnly: true });
+    res.clearCookie('access_token', { httpOnly: true });
     // Return a success message
     return res.json({ message: 'User logged out successfully' });
   };

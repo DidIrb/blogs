@@ -1,5 +1,6 @@
 
 import { Outlet } from "react-router-dom";
+import { Navbar } from "./navbar";
 
 export const AuthLayout = () => {
     return (
@@ -15,6 +16,7 @@ export const AdminLayout = () => {
     return (
         <div className="w-screen p-3">
             <h1>Admin View</h1>
+            <Navbar />
             <Outlet />
             <h2>footer</h2>
         </div>

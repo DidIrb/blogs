@@ -46,7 +46,7 @@ function App() {
     // Admin
     {
       path: "/",
-      element: isAuthenticated ? <AdminLayout /> : <Navigate to="/sign-in" />,
+      element: isAuthenticated ? <AdminLayout /> : <Navigate to="/signin" />,
       children: [
         {
           path: "blogs",

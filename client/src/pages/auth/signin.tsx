@@ -8,22 +8,17 @@ export const Signin = () => {
   const { signin } = useContext(AuthContext) as AuthContextValue;
   const navigate = useNavigate();
   const [err, setError] = useState(null);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<user>();
+  const { register, handleSubmit, formState: { errors } } = useForm<user>();
 
   const onSubmit = async (data: user) => { 
     console.log("this is the data", data);
     try {
-      signin(data)
-      navigate("/");
+      await signin(data);
+      navigate("/home") 
     } catch (err: any) {
-      console.log(err.response)
+      console.log("Error inside Signin page", err)
       setError(err.response.data.message);
-      setTimeout(() => { setError(null); }, 2000);
+      setTimeout(() => { setError(null); }, 3000);
     }
   };
 
